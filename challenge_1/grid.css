@@ -1,33 +1,52 @@
-table tr td {
-  border: 1px solid rgb(36, 10, 10);
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
+body {
+  margin: auto;
+  width: 50vh;
+  /* width: 100vw; */
+  /* height: 100vh; */
 }
 
 h1 {
-  font-size: 20px;
+  font-size: 10vh;
 }
 
 button {
-  display: inline-block;
-  width: 200px;
-  height: 20px;
+  display: block;
+  background-color: lightgray;
+  width: 20vh;
+  height: 5vh;
+  border-radius: 2vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10vh;
+  outline:none;
+}
+
+button:hover {
+  background-color: lightcoral;
 }
 
 table {
-  width: 480px;
-  height: 480px;
-  /* display: inline-block; */
+  table-layout: fixed;
+  margin: auto;
+  width: 50vh;
+  height: 50vh;
+  border: 1px solid rgb(36, 10, 10);
+  border-collapse: separate;
+  border-radius: 20px;
+  display: inline-table;
 }
 
 td {
-  padding: 5px;
-  width: 100px;
-  max-width: 100px;
-  white-space: pre-wrap;        /* css */
-  white-space: -moz-pre-wrap;   /* Mozilla */
-  white-space: -pre-wrap;       /* Chrome*/
-  white-space: -o-pre-wrap;     /* Opera 7 */
-  word-wrap: break-word; /* Internet Explorer 5.5+ */
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 10vh;
+  /* overflow:hidden; */
+  /* text-overflow:ellipsis; */
+  white-space: nowrap;
+  /* padding: 5px; */
+  /* width: 100px; */
+  /* width: 15vh; */
+  min-width: 50vh;
+  max-width: 60vh;
 }
