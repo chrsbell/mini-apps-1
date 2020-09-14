@@ -3,6 +3,13 @@ class App {
   constructor() {
     // representation of tic-tac-toe grid
     this.grid = new Grid();
+
+    // add reset button
+    let app = document.getElementById('app');
+    let resetButton = document.createElement('button');
+    let resetText = document.createTextNode('Reset Game');
+    resetButton.appendChild(resetText);
+    app.appendChild(resetButton);
   }
 }
 
