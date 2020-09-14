@@ -7,20 +7,36 @@ class App {
       symbols: ['', 'X', 'O'],
       onClick: this.update,
       gameOver: false,
+      score: [0, 0, 0],
     }
 
     this.state.grid = new Grid(this.state);
 
-    // reset button
     let app = document.getElementById('app');
+
+    // score text
+    this.state.scoreElement = [0];
+    this.state.scoreElement.push(document.createElement('p'));
+    this.state.scoreElement[1].classList.add('score')
+    this.state.scoreElement[1].innerHTML = `Player 1\'s score so far: ${this.state.score[1]}`;
+
+    this.state.scoreElement.push(document.createElement('p'));
+    this.state.scoreElement[2].classList.add('win-message')
+    this.state.scoreElement[2].innerHTML = `Player 2\'s score so far: ${this.state.score[2]}`;
+    app.appendChild(this.state.scoreElement[1]);
+    app.appendChild(this.state.scoreElement[2]);
+
+    // reset button
     let resetButton = document.createElement('button');
-    let resetText = document.createTextNode('Reset Game');
-    resetButton.appendChild(resetText);
+    resetButton.classList.add('reset-button');
+    resetButton.innerHTML = 'Reset Game';
+    // resetButton.appendChild(resetText);
     resetButton.addEventListener('click', this.reset.bind(this));
     app.appendChild(resetButton);
 
     // win message
-    this.state.winMessage = document.createElement('h2');
+    this.state.winMessage = document.createElement('p');
+    this.state.winMessage.classList.add('win-message');
     this.state.winMessage.innerHTML = '';
     app.appendChild(this.state.winMessage);
   }
@@ -38,6 +54,9 @@ class App {
       // add O/X to element
       let symbol = this.state.symbols[this.state.playerTurn];
 
+      // current player
+      let player = this.state.playerTurn;
+
       // make sure cell is empty
       if (!this.getCellState()) {
         this.getElement().innerHTML = symbol;
@@ -47,11 +66,13 @@ class App {
       // check win condition
       if (this.state.grid.checkWinCondition()) {
         this.state.gameOver = true;
-        this.state.winMessage.innerHTML = `Player ${this.state.playerTurn} won!`;
+        this.state.score[this.state.playerTurn]++;
+        this.state.scoreElement[player].innerHTML = `Player ${player}\'s score so far: ${this.state.score[player]}`;
+        this.state.winMessage.innerHTML = `Player ${player} won!`;
       };
 
       // change player turn
-      if (this.state.playerTurn === 1) {
+      if (player === 1) {
         this.state.playerTurn = 2;
       } else {
         this.state.playerTurn = 1;
@@ -177,7 +198,7 @@ class Cell {
 let main = () => {
   // make sure window has loaded first
   window.onload = () => {
-    let game = new App();
+    new App();
   }
 }
 

@@ -6,14 +6,28 @@ body {
   /* height: 100vh; */
 }
 
-h1 {
+.title {
   display: block;
   font-size: 64px;
   text-align: center;
   margin: auto;
 }
 
-button {
+.score {
+  display: block;
+  margin: auto;
+  padding: 40px;
+  text-align: center;
+}
+
+.win-message {
+  display: block;
+  margin: auto;
+  padding: 40px;
+  text-align: center;
+}
+
+.reset-button {
   display: block;
   font-size: 16px;
   background-color: white;
@@ -22,11 +36,11 @@ button {
   border-radius: 2vh;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10vh;
+  margin-top: 4vh;
   outline:none;
 }
 
-button:hover {
+.reset-button:hover {
   background-color: lightcoral;
 }
 
@@ -35,7 +49,7 @@ table {
   margin: auto;
   width: 50vh;
   height: 50vh;
-  /* display: inline-table; */
+  display: table;
 }
 
 td {
@@ -52,10 +66,6 @@ td {
   /* padding: 5px; */
   /* width: 100px; */
   /* width: 15vh; */
-  min-width: 50vh;
+  /* min-width: 50vh; */
   max-width: 60vh;
-}
-
-h2 {
-
 }
