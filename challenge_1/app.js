@@ -8,12 +8,7 @@ class App {
       onClick: this.update,
     }
 
-    // representation of tic-tac-toe grid
-    this.grid = new Grid(this.state);
-
-    this.playerTurn = 1;
-
-    this.symbols = ['', 'X', 'O'];
+    this.state.grid = new Grid(this.state);
 
     // add reset button
     let app = document.getElementById('app');
@@ -30,7 +25,16 @@ class App {
 
   // update game
   update() {
-    this.getElement().innerHTML = this.state.symbols[this.state.playerTurn];
+    // add O/X to element
+    let symbol = this.state.symbols[this.state.playerTurn];
+    this.getElement().innerHTML = symbol;
+    this.setState(symbol);
+    // check win condition
+    if (this.state.grid.checkWinCondition()) {
+      debugger;
+    };
+
+    // change player turn
     if (this.state.playerTurn === 1) {
       this.state.playerTurn = 2;
     } else {
@@ -44,9 +48,9 @@ class Grid {
     // internal representation
     this.state = state;
     this._grid = [
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0],
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
     ];
 
     // add individual blocks
@@ -57,6 +61,39 @@ class Grid {
     }
 
     this.renderTable();
+  }
+
+  // resets the grid
+  clear() {
+    for (let i = 0; i < this._grid.length; i++) {
+      for (let j = 0; j < this._grid[i].length; j++) {
+        this._grid[i][j].getElement().innerHTML = this.state.symbols[0];
+      }
+    }
+  }
+
+  // checks if a row has a win
+  isRowWin() {
+    for (let i = 0; i < this._grid.length; i++) {
+      let state = this._grid[i][0].getState();
+      if (state && state === this._grid[i][1].getState() && state === this._grid[i][2].getState()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isColumnWin() {
+
+  }
+
+  isDiagonalWin() {
+
+  }
+
+  // returns whether win condition satisfied or not
+  checkWinCondition() {
+    return (this.isRowWin() || this.isColumnWin() || this.isDiagonalWin());
   }
 
   // creates a table in the DOM
@@ -85,10 +122,10 @@ class Block {
     this._state = '';
     // internal reference to DOM td element
     this._element = null;
-    // perform game logic using the block that triggered the update call
   }
   setElement(element) {
     this._element = element;
+    // perform game logic using the block that triggered the update call
     this._element.addEventListener('click', this.state.onClick.bind(this));
   }
   getElement() {
@@ -96,7 +133,7 @@ class Block {
   }
   setState(state) {
     this._state = state;
-    this.element.innerHTML = state;
+    this._element.innerHTML = state;
   }
   getState() {
     return this._state;
