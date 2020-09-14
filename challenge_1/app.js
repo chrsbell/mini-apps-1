@@ -14,11 +14,32 @@ class Grid {
       [0, 0, 0],
       [0, 0, 0],
     ];
-    for (let column of this._grid) {
-      for (let block of column) {
-        block = new Block();
+
+    // add individual blocks
+    for (let i = 0; i < this._grid.length; i++) {
+      for (let j = 0; j < this._grid[i].length; j++) {
+        this._grid[i][j] = new Block();
       }
     }
+
+    this.renderTable();
+  }
+
+  // creates a table in the DOM
+  renderTable() {
+    let app = document.getElementById('app');
+    let table = document.createElement('table');
+    for (let i = 0; i < this._grid.length; i++) {
+      let tr = document.createElement('tr');
+      for (let j = 0; j < this._grid[i].length; j++) {
+        let td = document.createElement('td');
+        // set reference to td element for each block
+        this._grid[i][j].setElement(td);
+        tr.appendChild(td);
+      }
+      table.appendChild(tr);
+    }
+    app.appendChild(table);
   }
 }
 
@@ -27,6 +48,11 @@ class Block {
   constructor() {
     // whether block has an O, X, or empty
     this.state = '';
+    // reference to DOM td element
+    this.element = null;
+  }
+  setElement(element) {
+    this.element = element;
   }
   getState() {
     return this.state;
@@ -36,9 +62,12 @@ class Block {
   }
 }
 
+// main entry point for app
 let main = () => {
-  // main entry point for app
-  let game = new App();
+  // make sure window has loaded first
+  window.onload = () => {
+    let game = new App();
+  }
 }
 
 main();
