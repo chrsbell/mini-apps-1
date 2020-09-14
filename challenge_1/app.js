@@ -1,11 +1,19 @@
 // Model
 class App {
   constructor() {
-    // representation of tic-tac-toe grid
-    this.grid = new Grid(this);
 
-    // which player's turn it is (1 or 2)
+    this.state = {
+      playerTurn: 1,
+      symbols: ['', 'X', 'O'],
+      onClick: this.update,
+    }
+
+    // representation of tic-tac-toe grid
+    this.grid = new Grid(this.state);
+
     this.playerTurn = 1;
+
+    this.symbols = ['', 'X', 'O'];
 
     // add reset button
     let app = document.getElementById('app');
@@ -15,21 +23,26 @@ class App {
     app.appendChild(resetButton);
   }
 
-  // change the player turn
-  changeTurn() {
-    this.playerTurn = 1 ? 2 : 1;
+  // resets the game
+  reset() {
+
   }
 
-  // click callback
+  // update game
   update() {
-    this.getElement().innerHTML = 'blue';
+    this.getElement().innerHTML = this.state.symbols[this.state.playerTurn];
+    if (this.state.playerTurn === 1) {
+      this.state.playerTurn = 2;
+    } else {
+      this.state.playerTurn = 1;
+    }
   }
 }
 
 class Grid {
-  constructor(app) {
+  constructor(state) {
     // internal representation
-    this.app = app;
+    this.state = state;
     this._grid = [
       [0, 0, 0],
       [0, 0, 0],
@@ -39,7 +52,7 @@ class Grid {
     // add individual blocks
     for (let i = 0; i < this._grid.length; i++) {
       for (let j = 0; j < this._grid[i].length; j++) {
-        this._grid[i][j] = new Block(app);
+        this._grid[i][j] = new Block(state);
       }
     }
 
@@ -66,8 +79,8 @@ class Grid {
 
 // Individual tic-tac-toe block
 class Block {
-  constructor(app) {
-    this.app = app;
+  constructor(state) {
+    this.state = state;
     // whether block has an O, X, or empty
     this._state = '';
     // internal reference to DOM td element
@@ -76,7 +89,7 @@ class Block {
   }
   setElement(element) {
     this._element = element;
-    this._element.addEventListener('click', this.app.update.bind(this));
+    this._element.addEventListener('click', this.state.onClick.bind(this));
   }
   getElement() {
     return this._element;
