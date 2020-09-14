@@ -11,22 +11,28 @@ class App {
 
     this.state.grid = new Grid(this.state);
 
-    // add reset button
+    // reset button
     let app = document.getElementById('app');
     let resetButton = document.createElement('button');
     let resetText = document.createTextNode('Reset Game');
     resetButton.appendChild(resetText);
     resetButton.addEventListener('click', this.reset.bind(this));
     app.appendChild(resetButton);
+
+    // win message
+    this.state.winMessage = document.createElement('h2');
+    this.state.winMessage.innerHTML = '';
+    app.appendChild(this.state.winMessage);
   }
 
   // resets the game
   reset() {
     this.state.gameOver = false;
     this.state.grid.clear();
+    this.state.winMessage.innerHTML = '';
   }
 
-  // update game
+  // click callback for updating game
   update() {
     if (!this.state.gameOver) {
       // add O/X to element
@@ -37,9 +43,11 @@ class App {
         this.getElement().innerHTML = symbol;
         this.setCellState(symbol);
       }
+
       // check win condition
       if (this.state.grid.checkWinCondition()) {
         this.state.gameOver = true;
+        this.state.winMessage.innerHTML = `Player ${this.state.playerTurn} won!`;
       };
 
       // change player turn
