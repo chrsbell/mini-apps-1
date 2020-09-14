@@ -2,7 +2,10 @@
 class App {
   constructor() {
     // representation of tic-tac-toe grid
-    this.grid = new Grid();
+    this.grid = new Grid(this);
+
+    // which player's turn it is (1 or 2)
+    this.playerTurn = 1;
 
     // add reset button
     let app = document.getElementById('app');
@@ -11,11 +14,22 @@ class App {
     resetButton.appendChild(resetText);
     app.appendChild(resetButton);
   }
+
+  // change the player turn
+  changeTurn() {
+    this.playerTurn = 1 ? 2 : 1;
+  }
+
+  // click callback
+  update() {
+    this.getElement().innerHTML = 'blue';
+  }
 }
 
 class Grid {
-  constructor() {
+  constructor(app) {
     // internal representation
+    this.app = app;
     this._grid = [
       [0, 0, 0],
       [0, 0, 0],
@@ -25,7 +39,7 @@ class Grid {
     // add individual blocks
     for (let i = 0; i < this._grid.length; i++) {
       for (let j = 0; j < this._grid[i].length; j++) {
-        this._grid[i][j] = new Block();
+        this._grid[i][j] = new Block(app);
       }
     }
 
@@ -52,21 +66,29 @@ class Grid {
 
 // Individual tic-tac-toe block
 class Block {
-  constructor() {
+  constructor(app) {
+    this.app = app;
     // whether block has an O, X, or empty
-    this.state = '';
-    // reference to DOM td element
-    this.element = null;
+    this._state = '';
+    // internal reference to DOM td element
+    this._element = null;
+    // perform game logic using the block that triggered the update call
   }
   setElement(element) {
-    this.element = element;
+    this._element = element;
+    this._element.addEventListener('click', this.app.update.bind(this));
   }
-  getState() {
-    return this.state;
+  getElement() {
+    return this._element;
   }
   setState(state) {
-    this.state = state;
+    this._state = state;
+    this.element.innerHTML = state;
   }
+  getState() {
+    return this._state;
+  }
+
 }
 
 // main entry point for app

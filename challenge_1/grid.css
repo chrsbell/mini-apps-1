@@ -23,5 +23,11 @@ table {
 
 td {
   padding: 5px;
-  /* border-radius: 20px; */
+  width: 100px;
+  max-width: 100px;
+  white-space: pre-wrap;        /* css */
+  white-space: -moz-pre-wrap;   /* Mozilla */
+  white-space: -pre-wrap;       /* Chrome*/
+  white-space: -o-pre-wrap;     /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
