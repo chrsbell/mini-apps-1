@@ -107,7 +107,7 @@ class Grid {
       for (let j = 0; j < this._grid[i].length; j++) {
         let cell = this._grid[i][j];
         cell.getElement().innerHTML = this.state.symbols[0];
-        cell.setCellState('');
+        cell.setCellState('`');
       }
     }
   }
@@ -167,14 +167,13 @@ class Grid {
 class Cell {
   constructor(state) {
     this.state = state;
-    // whether block has an O, X, or empty
-    this._text = '';
     // internal reference to DOM td element
     this._element = null;
   }
 
   setElement(element) {
     this._element = element;
+    this._element.innerHTML = '`';
     // perform game logic using the block that triggered the update call
     this._element.addEventListener('click', this.state.onClick.bind(this));
   }
@@ -184,12 +183,15 @@ class Cell {
   }
 
   setCellState(state) {
-    this._text = state;
     this._element.innerHTML = state;
   }
 
   getCellState() {
-    return this._text;
+    // only return cell state if it isn't placeholder text
+    if (this._element.innerHTML === '`') {
+      return false;
+    }
+    return this._element.innerHTML;
   }
 
 }
