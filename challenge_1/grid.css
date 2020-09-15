@@ -49,23 +49,24 @@ table {
   margin: auto;
   width: 50vh;
   height: 50vh;
-  display: table;
+  /* display: table; */
 }
 
 td {
   border: 10px solid rgb(36, 10, 10);
-  border-collapse: separate;
-  border-radius: 20px;
+  border-collapse: collapse;
+  /* border-radius: 50px; */
   /* font-weight: bold; */
   text-align: center;
   vertical-align: middle;
   font-size: 64px;
-  /* overflow:hidden; */
+  overflow:hidden;
+  /* perspective: 1px; */
   /* text-overflow:ellipsis; */
-  white-space: nowrap;
+  /* white-space: nowrap; */
   /* padding: 5px; */
   /* width: 100px; */
   /* width: 15vh; */
   /* min-width: 50vh; */
-  max-width: 60vh;
+  /* max-width: 60vh; */
 }

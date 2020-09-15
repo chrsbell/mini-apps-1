@@ -5,6 +5,7 @@ class App {
     this.state = {
       playerTurn: 1,
       symbols: ['', 'X', 'O'],
+      colors: ['black', 'red', 'blue'],
       onClick: this.update,
       gameOver: false,
       score: [0, 0, 0],
@@ -60,6 +61,7 @@ class App {
       // make sure cell is empty
       if (!this.getCellState()) {
         this.getElement().innerHTML = symbol;
+        this.getElement().style.color = this.state.colors[player];
         this.setCellState(symbol);
       }
 
@@ -106,8 +108,8 @@ class Grid {
     for (let i = 0; i < this._grid.length; i++) {
       for (let j = 0; j < this._grid[i].length; j++) {
         let cell = this._grid[i][j];
-        cell.getElement().innerHTML = this.state.symbols[0];
         cell.setCellState('`');
+        cell.getElement().style.color = this.state.colors[0];
       }
     }
   }
