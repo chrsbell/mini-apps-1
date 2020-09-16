@@ -4,9 +4,31 @@ class App extends React.Component {
     super();
   }
 
-  // send data to the server
-  send(data) {
-    // data.target is an array, can access individual fields using name property
+  // parse the data and send it to the server
+  send(event) {
+
+    // can access array of all fields using event.target
+    let userInfo =
+      _.chain(event.target)
+        .filter(field => {
+          return field.name;
+        })
+        .map(field => {
+          return _.pick(field, 'name', 'value');
+        })
+        .value();
+
+    // send data to server
+    axios.post('/submit', userInfo)
+    .then(res => {
+      console.log('Sent data to server!');
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+    // disable page reloading
+    event.preventDefault();
   }
 
   render() {
@@ -46,7 +68,7 @@ let Identifier = ({ next }) => {
         <input type="email" name="email-address" required></input>
 
         <label htmlFor="password">Password</label>
-        <input type="password" required></input>
+        <input type="password" name="password" required></input>
         <input type="btn" type="submit" name="submit" value="Next"></input>
       </fieldset>
     </form>
