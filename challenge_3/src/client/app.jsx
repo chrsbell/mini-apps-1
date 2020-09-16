@@ -15,6 +15,7 @@ class App extends React.Component {
         <Checkout />
         <Identifier next={this.send} />
         <Address next={this.send} />
+        <Payment next={this.send} />
       </div>
     );
   }
@@ -132,7 +133,24 @@ let Address = ({ next }) => {
 
 // payment and submit form
 let Payment = ({ next }) => {
-  return null;
+  return (
+    <form onSubmit={next}>
+      <fieldset className="Payment">
+        <legend>Payment</legend>
+
+        <label htmlFor="credit-card">Credit Card #</label>
+        <input type="text" name="credit-card" required></input>
+
+        <label htmlFor="expiration">Expiration Date</label>
+        <input type="date" name="expiration" required></input>
+
+        <label htmlFor="cvv">CVV</label>
+        <input type="text" name="cvv" required></input>
+
+        <input type="btn" type="submit" name="submit" value="Submit Payment"></input>
+      </fieldset>
+    </form>
+  );
 }
 
 // render page onload
