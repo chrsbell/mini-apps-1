@@ -2,10 +2,29 @@
 class App extends React.Component {
   constructor() {
     super();
+
+    // which part of the form user is on
+    this.state = {
+      page: 0
+    }
+
+    // how long to show completion message
+    this.timeoutTime = 2000;
+  }
+
+  // go to next page in checkout experience
+  changePage() {
+    this.setState({
+      page: (this.state.page + 1) % 5
+    });
+    console.log(this.state.page);
   }
 
   // parse the data and send it to the server
   send(event) {
+
+    // disable page reloading
+    event.preventDefault();
 
     // can access array of all fields using event.target
     let userInfo =
@@ -18,28 +37,53 @@ class App extends React.Component {
         })
         .value();
 
+
     // send data to server
     axios.post('/submit', userInfo)
     .then(res => {
       console.log('Sent data to server!');
+      this.changePage();
     })
     .catch(err => {
       console.log(err);
-    });
+      throw err;
+    })
 
-    // disable page reloading
-    event.preventDefault();
   }
 
   render() {
-    return (
-      <div>
-        <Checkout />
-        <Identifier next={this.send} />
-        <Address next={this.send} />
-        <Payment next={this.send} />
-      </div>
-    );
+    if (this.state.page === 0) {
+      return (
+        <div>
+          <Checkout next={this.send.bind(this)}/>
+        </div>
+      );
+    } else if (this.state.page === 1) {
+      return (
+        <div>
+          <Identifier next={this.send.bind(this)} />
+        </div>
+      );
+    } else if (this.state.page === 2) {
+      return (
+        <div>
+          <Address next={this.send.bind(this)} />
+        </div>
+      );
+    } else if (this.state.page === 3) {
+      return (
+        <div>
+          <Payment next={this.send.bind(this)} />
+        </div>
+      );
+    } else if (this.state.page === 4) {
+      setTimeout(this.changePage.bind(this), this.timeoutTime);
+      return (
+        <div>
+          <h1>Checkout Completed!</h1>
+        </div>
+      )
+    }
   }
 };
 
