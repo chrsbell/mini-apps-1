@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "nodemon compiled/server.js",
+    "start": "nodemon compiled/server.js",
     "babel": "npx babel src --watch --out-dir compiled"
   },
   "author": "Chris Bell",
@@ -16,7 +16,10 @@
     "@babel/preset-react": "^7.10.4"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cookie-session": "^1.4.0",
     "express": "^4.17.1",
-    "mongodb": "^3.6.2"
+    "mongodb": "^3.6.2",
+    "underscore": "^1.11.0"
   }
 }

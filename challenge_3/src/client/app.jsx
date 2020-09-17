@@ -10,14 +10,16 @@ class App extends React.Component {
 
     // how long to show completion message
     this.timeoutTime = 2000;
+
+    // number of steps in checkout experience
+    this.numPages = 5;
   }
 
-  // go to next page in checkout experience
+  // go to next page
   changePage() {
     this.setState({
-      page: (this.state.page + 1) % 5
+      page: (this.state.page + 1) % this.numPages
     });
-    console.log(this.state.page);
   }
 
   // parse the data and send it to the server
@@ -36,7 +38,6 @@ class App extends React.Component {
           return _.pick(field, 'name', 'value');
         })
         .value();
-
 
     // send data to server
     axios.post('/submit', userInfo)
